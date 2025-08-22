@@ -7,9 +7,12 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
   
-  const byDateDesc = data?.focus?.sort((evtA, evtB) =>
-    new Date(evtB.date) - new Date(evtA.date)
-  ) || [];
+  const byDateDesc = data?.focus?.sort((evtA, evtB) => {
+     if (!evtA.date) return 1;
+    if (!evtB.date) return -1;
+  
+     return new Date(evtA.date) < new Date(evtB.date)? -1 : 1;
+}) || [];
 
   useEffect(() => {
     const timer = setInterval(() => {
